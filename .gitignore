@@ -1,0 +1,9 @@
+#ignore folders
+/output_files
+/simulation
+/db
+/incremental_db
+
+#ignore files
+*.qdf
+*.rpt
