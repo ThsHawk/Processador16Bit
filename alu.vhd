@@ -26,6 +26,7 @@ begin
 				  input_01 OR input_02  when funct = "011" else
 				  NOT(input_01)         when funct = "100" else
 				  input_01 XOR input_02 when funct = "101" else
+					shift_left(input_01, to_integer(input_02)) when funct = "110" else
 				  unaffected;
 
 	output_01 <= temp;
