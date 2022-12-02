@@ -1,19 +1,20 @@
 LIBRARY IEEE;
 use IEEE.std_logic_1164.all;
+use IEEE.numeric_std.all;
 
 ENTITY registrador is
 
 	port(
 			clk     : IN STD_LOGIC;
-			entrada : IN STD_LOGIC_VECTOR(15 DOWNTO 0);
-			saida   : OUT STD_LOGIC_VECTOR(15 DOWNTO 0)
+			entrada : IN SIGNED(15 DOWNTO 0);
+			saida   : OUT SIGNED(15 DOWNTO 0)
 	);
 
 END registrador;
 
 architecture reg of registrador is
 
-	signal memoria   : STD_LOGIC_VECTOR(15 DOWNTO 0);
+	signal memoria   : SIGNED(15 DOWNTO 0);
 
 begin
 

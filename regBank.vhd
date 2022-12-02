@@ -1,16 +1,17 @@
 LIBRARY IEEE;
 use IEEE.std_logic_1164.all;
+use IEEE.numeric_std.all;
 
 ENTITY regBank is
 
 	port(
 			clk        : IN STD_LOGIC;
-			reg_soure  : IN STD_LOGIC_VECTOR(3 DOWNTO 0);
-			reg_temp   : IN STD_LOGIC_VECTOR(3 DOWNTO 0);
-			reg_dest   : IN STD_LOGIC_VECTOR(3 DOWNTO 0);
-			saida_reg1 : OUT STD_LOGIC_VECTOR(15 DOWNTO 0);
-			saida_reg2 : OUT STD_LOGIC_VECTOR(15 DOWNTO 0);
-			writeback  : IN STD_LOGIC_VECTOR(15 DOWNTO 0)
+			reg_soure  : IN UNSIGNED(3 DOWNTO 0);
+			reg_temp   : IN UNSIGNED(3 DOWNTO 0);
+			reg_dest   : IN UNSIGNED(3 DOWNTO 0);
+			saida_reg1 : OUT SIGNED(15 DOWNTO 0);
+			saida_reg2 : OUT SIGNED(15 DOWNTO 0);
+			writeback  : IN SIGNED(15 DOWNTO 0)
 	);
 
 END regBank;
@@ -21,8 +22,8 @@ architecture bank of regBank is
 
 		port(
 				clk     : IN STD_LOGIC;
-				entrada : IN STD_LOGIC_VECTOR(15 DOWNTO 0);
-				saida   : OUT STD_LOGIC_VECTOR(15 DOWNTO 0)
+				entrada : IN SIGNED(15 DOWNTO 0);
+				saida   : OUT SIGNED(15 DOWNTO 0)
 		);
 
 	END COMPONENT;
@@ -30,23 +31,23 @@ architecture bank of regBank is
 	COMPONENT regMux is
 
 		port(
-				adr        : IN STD_LOGIC_VECTOR(3 DOWNTO 0);
-				entrada_01 : IN STD_LOGIC_VECTOR(15 DOWNTO 0);
-				entrada_02 : IN STD_LOGIC_VECTOR(15 DOWNTO 0);
-				entrada_03 : IN STD_LOGIC_VECTOR(15 DOWNTO 0);
-				entrada_04 : IN STD_LOGIC_VECTOR(15 DOWNTO 0);
-				entrada_05 : IN STD_LOGIC_VECTOR(15 DOWNTO 0);
-				entrada_06 : IN STD_LOGIC_VECTOR(15 DOWNTO 0);
-				entrada_07 : IN STD_LOGIC_VECTOR(15 DOWNTO 0);
-				entrada_08 : IN STD_LOGIC_VECTOR(15 DOWNTO 0);
-				entrada_09 : IN STD_LOGIC_VECTOR(15 DOWNTO 0);
-				entrada_10 : IN STD_LOGIC_VECTOR(15 DOWNTO 0);
-				entrada_11 : IN STD_LOGIC_VECTOR(15 DOWNTO 0);
-				entrada_12 : IN STD_LOGIC_VECTOR(15 DOWNTO 0);
-				entrada_13 : IN STD_LOGIC_VECTOR(15 DOWNTO 0);
-				entrada_14 : IN STD_LOGIC_VECTOR(15 DOWNTO 0);
-				entrada_15 : IN STD_LOGIC_VECTOR(15 DOWNTO 0);
-				saida      : OUT STD_LOGIC_VECTOR(15 DOWNTO 0)
+				adr        : IN UNSIGNED(3 DOWNTO 0);
+				entrada_01 : IN SIGNED(15 DOWNTO 0);
+				entrada_02 : IN SIGNED(15 DOWNTO 0);
+				entrada_03 : IN SIGNED(15 DOWNTO 0);
+				entrada_04 : IN SIGNED(15 DOWNTO 0);
+				entrada_05 : IN SIGNED(15 DOWNTO 0);
+				entrada_06 : IN SIGNED(15 DOWNTO 0);
+				entrada_07 : IN SIGNED(15 DOWNTO 0);
+				entrada_08 : IN SIGNED(15 DOWNTO 0);
+				entrada_09 : IN SIGNED(15 DOWNTO 0);
+				entrada_10 : IN SIGNED(15 DOWNTO 0);
+				entrada_11 : IN SIGNED(15 DOWNTO 0);
+				entrada_12 : IN SIGNED(15 DOWNTO 0);
+				entrada_13 : IN SIGNED(15 DOWNTO 0);
+				entrada_14 : IN SIGNED(15 DOWNTO 0);
+				entrada_15 : IN SIGNED(15 DOWNTO 0);
+				saida      : OUT SIGNED(15 DOWNTO 0)
 		);
 
 	END COMPONENT;
@@ -54,57 +55,57 @@ architecture bank of regBank is
 	COMPONENT regDmux is
 
 		port(
-				adr      : IN STD_LOGIC_VECTOR(3 DOWNTO 0);
-				entrada  : IN STD_LOGIC_VECTOR(15 DOWNTO 0);
-				saida_01 : OUT STD_LOGIC_VECTOR(15 DOWNTO 0);
-				saida_02 : OUT STD_LOGIC_VECTOR(15 DOWNTO 0);
-				saida_03 : OUT STD_LOGIC_VECTOR(15 DOWNTO 0);
-				saida_04 : OUT STD_LOGIC_VECTOR(15 DOWNTO 0);
-				saida_05 : OUT STD_LOGIC_VECTOR(15 DOWNTO 0);
-				saida_06 : OUT STD_LOGIC_VECTOR(15 DOWNTO 0);
-				saida_07 : OUT STD_LOGIC_VECTOR(15 DOWNTO 0);
-				saida_08 : OUT STD_LOGIC_VECTOR(15 DOWNTO 0);
-				saida_09 : OUT STD_LOGIC_VECTOR(15 DOWNTO 0);
-				saida_10 : OUT STD_LOGIC_VECTOR(15 DOWNTO 0);
-				saida_11 : OUT STD_LOGIC_VECTOR(15 DOWNTO 0);
-				saida_12 : OUT STD_LOGIC_VECTOR(15 DOWNTO 0);
-				saida_13 : OUT STD_LOGIC_VECTOR(15 DOWNTO 0);
-				saida_14 : OUT STD_LOGIC_VECTOR(15 DOWNTO 0);
-				saida_15 : OUT STD_LOGIC_VECTOR(15 DOWNTO 0)
+				adr      : IN UNSIGNED(3 DOWNTO 0);
+				entrada  : IN SIGNED(15 DOWNTO 0);
+				saida_01 : OUT SIGNED(15 DOWNTO 0);
+				saida_02 : OUT SIGNED(15 DOWNTO 0);
+				saida_03 : OUT SIGNED(15 DOWNTO 0);
+				saida_04 : OUT SIGNED(15 DOWNTO 0);
+				saida_05 : OUT SIGNED(15 DOWNTO 0);
+				saida_06 : OUT SIGNED(15 DOWNTO 0);
+				saida_07 : OUT SIGNED(15 DOWNTO 0);
+				saida_08 : OUT SIGNED(15 DOWNTO 0);
+				saida_09 : OUT SIGNED(15 DOWNTO 0);
+				saida_10 : OUT SIGNED(15 DOWNTO 0);
+				saida_11 : OUT SIGNED(15 DOWNTO 0);
+				saida_12 : OUT SIGNED(15 DOWNTO 0);
+				saida_13 : OUT SIGNED(15 DOWNTO 0);
+				saida_14 : OUT SIGNED(15 DOWNTO 0);
+				saida_15 : OUT SIGNED(15 DOWNTO 0)
 		);
 
 	END COMPONENT;
 
-	signal in_reg_01  : STD_LOGIC_VECTOR(15 DOWNTO 0);
-	signal in_reg_02  : STD_LOGIC_VECTOR(15 DOWNTO 0);
-	signal in_reg_03  : STD_LOGIC_VECTOR(15 DOWNTO 0);
-	signal in_reg_04  : STD_LOGIC_VECTOR(15 DOWNTO 0);
-	signal in_reg_05  : STD_LOGIC_VECTOR(15 DOWNTO 0);
-	signal in_reg_06  : STD_LOGIC_VECTOR(15 DOWNTO 0);
-	signal in_reg_07  : STD_LOGIC_VECTOR(15 DOWNTO 0);
-	signal in_reg_08  : STD_LOGIC_VECTOR(15 DOWNTO 0);
-	signal in_reg_09  : STD_LOGIC_VECTOR(15 DOWNTO 0);
-	signal in_reg_10  : STD_LOGIC_VECTOR(15 DOWNTO 0);
-	signal in_reg_11  : STD_LOGIC_VECTOR(15 DOWNTO 0);
-	signal in_reg_12  : STD_LOGIC_VECTOR(15 DOWNTO 0);
-	signal in_reg_13  : STD_LOGIC_VECTOR(15 DOWNTO 0);
-	signal in_reg_14  : STD_LOGIC_VECTOR(15 DOWNTO 0);
-	signal in_reg_15  : STD_LOGIC_VECTOR(15 DOWNTO 0);
-	signal out_reg_01 : STD_LOGIC_VECTOR(15 DOWNTO 0);
-	signal out_reg_02 : STD_LOGIC_VECTOR(15 DOWNTO 0);
-	signal out_reg_03 : STD_LOGIC_VECTOR(15 DOWNTO 0);
-	signal out_reg_04 : STD_LOGIC_VECTOR(15 DOWNTO 0);
-	signal out_reg_05 : STD_LOGIC_VECTOR(15 DOWNTO 0);
-	signal out_reg_06 : STD_LOGIC_VECTOR(15 DOWNTO 0);
-	signal out_reg_07 : STD_LOGIC_VECTOR(15 DOWNTO 0);
-	signal out_reg_08 : STD_LOGIC_VECTOR(15 DOWNTO 0);
-	signal out_reg_09 : STD_LOGIC_VECTOR(15 DOWNTO 0);
-	signal out_reg_10 : STD_LOGIC_VECTOR(15 DOWNTO 0);
-	signal out_reg_11 : STD_LOGIC_VECTOR(15 DOWNTO 0);
-	signal out_reg_12 : STD_LOGIC_VECTOR(15 DOWNTO 0);
-	signal out_reg_13 : STD_LOGIC_VECTOR(15 DOWNTO 0);
-	signal out_reg_14 : STD_LOGIC_VECTOR(15 DOWNTO 0);
-	signal out_reg_15 : STD_LOGIC_VECTOR(15 DOWNTO 0);
+	signal in_reg_01  : SIGNED(15 DOWNTO 0);
+	signal in_reg_02  : SIGNED(15 DOWNTO 0);
+	signal in_reg_03  : SIGNED(15 DOWNTO 0);
+	signal in_reg_04  : SIGNED(15 DOWNTO 0);
+	signal in_reg_05  : SIGNED(15 DOWNTO 0);
+	signal in_reg_06  : SIGNED(15 DOWNTO 0);
+	signal in_reg_07  : SIGNED(15 DOWNTO 0);
+	signal in_reg_08  : SIGNED(15 DOWNTO 0);
+	signal in_reg_09  : SIGNED(15 DOWNTO 0);
+	signal in_reg_10  : SIGNED(15 DOWNTO 0);
+	signal in_reg_11  : SIGNED(15 DOWNTO 0);
+	signal in_reg_12  : SIGNED(15 DOWNTO 0);
+	signal in_reg_13  : SIGNED(15 DOWNTO 0);
+	signal in_reg_14  : SIGNED(15 DOWNTO 0);
+	signal in_reg_15  : SIGNED(15 DOWNTO 0);
+	signal out_reg_01 : SIGNED(15 DOWNTO 0);
+	signal out_reg_02 : SIGNED(15 DOWNTO 0);
+	signal out_reg_03 : SIGNED(15 DOWNTO 0);
+	signal out_reg_04 : SIGNED(15 DOWNTO 0);
+	signal out_reg_05 : SIGNED(15 DOWNTO 0);
+	signal out_reg_06 : SIGNED(15 DOWNTO 0);
+	signal out_reg_07 : SIGNED(15 DOWNTO 0);
+	signal out_reg_08 : SIGNED(15 DOWNTO 0);
+	signal out_reg_09 : SIGNED(15 DOWNTO 0);
+	signal out_reg_10 : SIGNED(15 DOWNTO 0);
+	signal out_reg_11 : SIGNED(15 DOWNTO 0);
+	signal out_reg_12 : SIGNED(15 DOWNTO 0);
+	signal out_reg_13 : SIGNED(15 DOWNTO 0);
+	signal out_reg_14 : SIGNED(15 DOWNTO 0);
+	signal out_reg_15 : SIGNED(15 DOWNTO 0);
 
 begin
 
