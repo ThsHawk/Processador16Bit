@@ -49,9 +49,9 @@ architecture processador of Processador16bit is
   			opcode              : IN UNSIGNED(3 DOWNTO 0);
   			ctrl_alu            : OUT UNSIGNED(2 DOWNTO 0);
   			--ctrl_input_02       : OUT BIT;
-  			--ctrl_signalExtend   : OUT BIT;
+  			ctrl_signalExtend   : OUT BIT;
   			--ctrl_regBank       : OUT SIGNED(15 DOWNTO 0);
-				ctrl_mux_reg_dest   : OUT UNSIGNED(1 DOWNTO 0);
+				--ctrl_mux_reg_dest   : OUT UNSIGNED(1 DOWNTO 0);
   			ctrl_section_02Dmux : OUT BIT;
   			ctrl_section_03Dmux : OUT UNSIGNED(1 DOWNTO 0);
   			ctrl_section_04Dmux : OUT BIT
@@ -105,12 +105,24 @@ architecture processador of Processador16bit is
 
 	END COMPONENT;
 
+	COMPONENT signalExtend is
+
+		port(
+				ctrl       : IN BIT;
+				section_03 : IN UNSIGNED(3 DOWNTO 0);
+				section_04 : IN UNSIGNED(3 DOWNTO 0);
+				saida      : OUT SIGNED(15 DOWNTO 0)
+		);
+
+	END COMPONENT;
+
   signal signal_ctrl_alu            : UNSIGNED(2 DOWNTO 0);
   --signal signal_ctrl_input_02       : BIT;
+	signal signal_ctrl_signalExtend   : BIT;
   signal signal_ctrl_section_02Dmux : BIT;
   signal signal_ctrl_section_03Dmux : UNSIGNED(1 DOWNTO 0);
   signal signal_ctrl_section_04Dmux : BIT;
-	signal signal_ctrl_mux_reg_dest   : UNSIGNED(1 DOWNTO 0);
+	--signal signal_ctrl_mux_reg_dest   : UNSIGNED(1 DOWNTO 0);
   signal signal_reg_soure           : UNSIGNED(3 DOWNTO 0);
   signal signal_reg_temp            : UNSIGNED(3 DOWNTO 0);
   signal signal_reg_dest            : UNSIGNED(3 DOWNTO 0);
@@ -120,6 +132,7 @@ architecture processador of Processador16bit is
   signal signal_in2_alu             : SIGNED(15 DOWNTO 0);
 	signal signal_4bit_section03      : UNSIGNED(3 DOWNTO 0);
 	signal signal_4bit_section04      : UNSIGNED(3 DOWNTO 0);
+	signal signal_sigExt_out          : SIGNED(15 DOWNTO 0);
 	signal signal_equal               : BIT;
 	signal reg_dest_I_type            : UNSIGNED(3 DOWNTO 0);
 	signal reg_dest_J_type            : UNSIGNED(3 DOWNTO 0);
@@ -129,7 +142,7 @@ begin
 
   ctrl : control port map(opcode              => opcode,
 													ctrl_alu            => signal_ctrl_alu,
-													ctrl_mux_reg_dest   => signal_ctrl_mux_reg_dest,
+													ctrl_signalExtend   => signal_ctrl_signalExtend,
 													ctrl_section_02Dmux => signal_ctrl_section_02Dmux,
 													ctrl_section_03Dmux => signal_ctrl_section_03Dmux,
 													ctrl_section_04Dmux => signal_ctrl_section_04Dmux
@@ -165,7 +178,7 @@ begin
 
   mux_alu : input_02Mux port map(ctrl       => signal_ctrl_section_04Dmux,
 																 entrada_01 => signal_saida_regBank2,
-																 entrada_02 => "0000000000000000",
+																 entrada_02 => signal_sigExt_out,
 																 saida      => signal_in2_alu
 																 );
 
@@ -176,12 +189,18 @@ begin
 											output_01 => signal_writeback
 											);
 
-  regdestMux : mux_3to1x4 port map(ctrl       => signal_ctrl_mux_reg_dest,
-																		entrada_01 => reg_dest_J_type,
-																		entrada_02 => reg_dest_I_type,
-																		entrada_03 => reg_dest_R_type,
-																		saida      => signal_reg_dest
-																		);
+  regdestMux : mux_3to1x4 port map(ctrl       => signal_ctrl_section_03Dmux,
+																	 entrada_01 => reg_dest_J_type,
+																	 entrada_02 => reg_dest_I_type,
+																	 entrada_03 => reg_dest_R_type,
+																	 saida      => signal_reg_dest
+																	 );
+
+	extender : signalExtend port map(ctrl       => signal_ctrl_signalExtend,
+																 	 section_03 => signal_4bit_section03,
+																	 section_04 => signal_4bit_section04,
+																	 saida      => signal_sigExt_out
+																	 );
 
   saida <= signal_writeback;
 

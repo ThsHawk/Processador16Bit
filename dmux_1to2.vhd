@@ -15,9 +15,11 @@ END dmux_1to2;
 
 architecture dmux1to2 of dmux_1to2 is
 
-	begin
+	constant zero : UNSIGNED(3 DOWNTO 0) := "0000";
 
-		saida_01 <= entrada when ctrl = '1' else unaffected;
-		saida_02 <= entrada when ctrl = '0' else unaffected;
+begin
 
-	end architecture;
+	saida_01 <= entrada when ctrl = '0' else zero when ctrl = '1';
+	saida_02 <= entrada when ctrl = '1' else zero when ctrl = '0';
+
+end architecture;

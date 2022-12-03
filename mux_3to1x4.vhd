@@ -15,13 +15,26 @@ ENTITY mux_3to1x4 is
 END mux_3to1x4;
 
 architecture reg_destMux of mux_3to1x4 is
+
+	constant zero : UNSIGNED(3 DOWNTO 0) := "0000";
+
 begin
 
-	with ctrl select
+	process(ctrl, entrada_01, entrada_02, entrada_03)
+	begin
+		
+		if ctrl = "00" then
 
-		saida <= entrada_01 when "00", --J type
-		         entrada_02 when "01", --I type
-		         entrada_03 when "10", --R type
-		         unaffected when others;
+			saida <= entrada_01;
 
+		elsif ctrl = "01" then
+
+			saida <= entrada_02;
+
+		else
+
+			saida <= entrada_03;
+
+		end if;
+	end process;
 end architecture;
