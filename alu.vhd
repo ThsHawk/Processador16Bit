@@ -27,15 +27,21 @@ begin
 				  NOT(input_01)         when funct = "100" else
 				  input_01 XOR input_02 when funct = "101" else
 					shift_left(input_01, to_integer(input_02)) when funct = "110" else
-				  unaffected;
-
-	output_01 <= temp;
+					input_01 - input_02   when funct = "111";
 
 	process(temp)
   begin
 
 		if temp = "0000000000000000" then equal <= '1';
 		else equal <= '0';
+		end if;
+
+		if funct = "111" and temp < "0000000000000000" then
+			output_01 <= "0000000000000001";
+		elsif funct = "111" then
+			output_01 <= "0000000000000000";
+		else
+			output_01 <= temp;
 		end if;
 
 	end process;

@@ -23,11 +23,13 @@ begin
 	process(opcode)
 	begin
 
-		ctrl_alu <= ((not(opcode(3)) and opcode(2) and opcode(1) and not(opcode(0)))
-								OR (opcode(3) and not(opcode(2)) and not(opcode(1)) and opcode(0))
-								OR (opcode(3) and not(opcode(2)) and opcode(1) and not(opcode(0))))
+		ctrl_alu <= ((not(opcode(3)) and opcode(2) and opcode(1))
+								OR (opcode(3) and opcode(2) and not(opcode(1)) and opcode(0))
+								OR (opcode(3) and not(opcode(2)) and opcode(1) and not(opcode(0)))
+								OR (opcode(3) and not(opcode(2)) and not(opcode(1)) and opcode(0)))
 								&
 								((not(opcode(3)) and opcode(2) and not(opcode(1)))
+								OR (not(opcode(3)) and opcode(2) and opcode(0))
 								OR (opcode(3) and not(opcode(2)) and not(opcode(1)) and opcode(0)))
 								&
 								((not(opcode(3)) and opcode(1) and opcode(0))
@@ -35,9 +37,9 @@ begin
 								OR (not(opcode(3)) and opcode(2) and opcode(1)));
 
 		ctrl_section_02Dmux <= to_bit(opcode(3) and opcode(2) and opcode(1));
-		ctrl_section_03Dmux <= (not(opcode(3))
+		ctrl_section_03Dmux <= ((opcode(3) and opcode(1) and opcode(0))
 													 OR
-													 (not(opcode(2)) and opcode(1) and not(opcode(0))))
+													 (opcode(3) and opcode(2) and opcode(1)))
 													 &
 													 (opcode(3) and not(opcode(1)));
 		ctrl_section_04Dmux <= to_bit((opcode(3) and opcode(2)) OR (opcode(3) and not(opcode(1))));
