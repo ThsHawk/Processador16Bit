@@ -10,6 +10,7 @@ ENTITY control is
 			--ctrl_input_02       : OUT BIT;
 			ctrl_signalExtend   : OUT BIT;
 			--ctrl_regBank       : OUT SIGNED(15 DOWNTO 0);
+			ctrl_mux_reg_dest   : OUT UNSIGNED(1 DOWNTO 0);
 			ctrl_section_02Dmux : OUT BIT;
 			ctrl_section_03Dmux : OUT UNSIGNED(1 DOWNTO 0);
 			ctrl_section_04Dmux : OUT BIT
@@ -45,6 +46,11 @@ begin
 		ctrl_section_04Dmux <= to_bit((opcode(3) and opcode(2)) OR (opcode(3) and not(opcode(1))));
 
 		ctrl_signalExtend <= to_bit(opcode(1) or not(opcode(3)));
+
+		ctrl_mux_reg_dest <= ((not(opcode(3))
+												 OR (not(opcode(2)) and opcode(1) and opcode(3)))
+												 &
+												 (opcode(3) and not(opcode(1))));
 
 	end process;
 end architecture;
